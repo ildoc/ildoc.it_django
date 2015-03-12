@@ -1,0 +1,7 @@
+*.py[cod]
+*.sqlite3
+
+/blog/migrations/*
+!/blog/migrations/__init__.py
+
+ildoc/local_settings.py
