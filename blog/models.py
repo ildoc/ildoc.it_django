@@ -6,9 +6,28 @@ from django.template.defaultfilters import slugify
 
 class Category(models.Model):
     title = models.CharField('Categoria', max_length=200)
+    slug = models.CharField(max_length=200)
 
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug= slugify(self.title)
+        super(Category, self).save(*args, **kwargs)
+
+
+class Tag(models.Model):
+    title = models.CharField('Tag', max_length=200)
+    slug = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug= slugify(self.title)
+        super(Tag, self).save(*args, **kwargs)
 
 
 class Post(models.Model):
@@ -18,6 +37,7 @@ class Post(models.Model):
     pub_date = models.DateTimeField('Pubblicato il',default=datetime.now())
     modified_date = models.DateTimeField('Modificato il',default=datetime.now())
     category = models.ForeignKey(Category)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def excerpt(self):
         maxChar=250

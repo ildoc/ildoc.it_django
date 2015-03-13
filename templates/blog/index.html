@@ -4,12 +4,11 @@
 
 {% block content %}
 <h1>Blog</h1>
-Aprirò un blog tutto mio! Con blackjack e squillo di lusso!
 {% if latest_post_list %}
 	{% for post in latest_post_list %}
 	<div class='post'>
 	  <a href="{% url 'blog:detail' post.slug %}"><h2>{{ post.title }}</h2></a>
-	  <div class="well small">{{ post.pub_date|date:"j M Y H:i" }}</div>
+	  <div class="well small">{{ post.pub_date|date:"j M Y H:i" }} in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category }}</a></div>
 	  <div class="summary">{{ post.excerpt|striptags|linebreaksbr }}</div>
 	  <a class="btn primary xsmall" href="{% url 'blog:detail' post.slug %}">Leggi tutto...</a>
 	</div>

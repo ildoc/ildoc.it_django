@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Post, Category
+
+from .models import Post, Category, Tag
 
 class PostAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Post', {'fields':['title','content','category']}),
+        ('Post', {'fields':['title','content','category','tags']}),
         ('Info', {'fields':['pub_date'], 'classes': ['collapse']}),
     ]
 
@@ -13,3 +14,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category)
+admin.site.register(Tag)
