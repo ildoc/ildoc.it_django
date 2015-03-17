@@ -1,9 +1,15 @@
 {% extends "base.html" %}
+{% load static from staticfiles %}
 
-{% block windowtitle %}Blog | il_doc{% endblock %}
+{% block windowtitle %}{{ SITENAME }}{% endblock %}
+{% block additional_head %}
+<script src="{% static 'js/quotes.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-<h1>Blog</h1>
+<div id="quote" class ="well small">
+<script>document.write(getrandomquote());</script>
+</div>
 {% if latest_post_list %}
 	{% for post in latest_post_list %}
 	<div class='post'>

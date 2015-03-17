@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import generic
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template import RequestContext
 
 from .models import Post, Category, Tag
 
@@ -21,12 +22,14 @@ def index(request):
 
     return render_to_response('index.html', {
         'latest_post_list': latest_post_list,
-        })
+        },
+        context_instance=RequestContext(request))
 
 
 def detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    return render(request, 'detail.html', {'post': post})
+    return render(request, 'detail.html', {'post': post},
+    context_instance=RequestContext(request))
 
 
 def category(request, slug):
@@ -44,9 +47,11 @@ def category(request, slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('index.html', {
+    return render_to_response('category.html', {
         'latest_post_list': latest_post_list,
-        })
+        'category': category,
+        },
+        context_instance=RequestContext(request))
 
 def tag(request, slug):
     tag = Tag.objects.get(slug=slug)
@@ -63,10 +68,13 @@ def tag(request, slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('index.html', {
+    return render_to_response('tag.html', {
         'latest_post_list': latest_post_list,
-        })
+        'tag': tag,
+        },
+        context_instance=RequestContext(request))
 
 def taglist(request):
     tags = Tag.objects.all().order_by('title')
-    return render_to_response('tags.html', {'tags': tags, })
+    return render_to_response('tags.html', {'tags': tags, },
+    context_instance=RequestContext(request))
