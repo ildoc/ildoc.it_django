@@ -11,19 +11,20 @@
 <script>document.write(getrandomquote());</script>
 </div>
 {% if latest_post_list %}
-	{% for post in latest_post_list %}
-	<div class='post'>
-	  <a href="{% url 'blog:detail' post.slug %}"><h2>{{ post.title }}</h2></a>
-	  <div class="well small">
-			{{ post.pub_date|date:"j M Y H:i" }}
-			in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category }}</a>
-			| Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a> {% endfor %}
-		</div>
-	  <div class="summary">{{ post.excerpt|striptags|linebreaksbr }}</div>
-	  <a class="btn primary xsmall" href="{% url 'blog:detail' post.slug %}">Leggi tutto...</a>
-	</div>
-	{% endfor %}
-	<div class="pagination">
+  {% for post in latest_post_list %}
+  <div class='post'>
+    <a href="{% url 'blog:detail' post.slug %}"><h2>{{ post.title }}</h2></a>
+    <div class="well small">
+      {{ post.pub_date|date:"j M Y H:i" }}
+      by {{ post.author }}
+      in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category }}</a>
+      | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a> {% endfor %}
+    </div>
+    <div class="summary">{{ post.excerpt|striptags|linebreaksbr }}</div>
+    <a class="btn primary xsmall" href="{% url 'blog:detail' post.slug %}">Leggi tutto...</a>
+  </div>
+  {% endfor %}
+  <div class="pagination">
     <span class="step-links">
         {% if latest_post_list.has_previous %}
             <a href="?page={{ latest_post_list.previous_page_number }}"><</a>
@@ -39,6 +40,6 @@
     </span>
 </div>
 {% else %}
-	<p>Nessun post disponibile</p>
+  <p>Nessun post disponibile</p>
 {% endif %}
 {% endblock %}

@@ -12,6 +12,10 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ['pub_date', 'modified_date']
     search_fields = ['title', 'content']
 
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        obj.save()
+
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Category', {'fields': ['title']})

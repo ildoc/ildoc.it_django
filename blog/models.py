@@ -2,6 +2,7 @@ from datetime import datetime
 from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -38,6 +39,7 @@ class Post(models.Model):
     modified_date = models.DateTimeField('Modificato il',default=datetime.now())
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
+    author = models.ForeignKey(User)
 
     def excerpt(self):
         maxChar=250
@@ -54,4 +56,6 @@ class Post(models.Model):
             # Newly created object, so set slug
             self.slug= slugify(self.title)
             self.modified_date = datetime.now()
+            #if self.request:
+                #self.author = self.request.user
         super(Post, self).save(*args, **kwargs)
