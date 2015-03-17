@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ SITENAME }} <small>Elenco tag</small>{% endblock %}
+{% block content %}
+<ul>
+{% for tag in tags %}
+  <li><a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

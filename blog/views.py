@@ -19,14 +19,14 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('blog/index.html', {
+    return render_to_response('index.html', {
         'latest_post_list': latest_post_list,
         })
 
 
 def detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    return render(request, 'blog/detail.html', {'post': post})
+    return render(request, 'detail.html', {'post': post})
 
 
 def category(request, slug):
@@ -44,7 +44,7 @@ def category(request, slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('blog/index.html', {
+    return render_to_response('index.html', {
         'latest_post_list': latest_post_list,
         })
 
@@ -63,6 +63,10 @@ def tag(request, slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('blog/index.html', {
+    return render_to_response('index.html', {
         'latest_post_list': latest_post_list,
         })
+
+def taglist(request):
+    tags = Tag.objects.all().order_by('title')
+    return render_to_response('tags.html', {'tags': tags, })
