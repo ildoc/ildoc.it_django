@@ -56,7 +56,10 @@
           <p>&copy; Doc | 2007-<span id="currentYear"></span> | v. {{ VERSION }}</p>
         </footer>
       </div>
+      {% include "sidebar.html" %}
     </div>
+    
+    {% include "analytics.html" %}
     <script>
       document.getElementById("currentYear").innerHTML = new Date().getFullYear();
     </script>

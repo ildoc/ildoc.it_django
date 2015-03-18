@@ -5,6 +5,13 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
+STATUS_CHOICES = (
+    (1, 'Published'),
+    (2, 'Draft'),
+    (3, 'Hidden'),
+)
+
+
 class Category(models.Model):
     title = models.CharField('Categoria', max_length=200)
     slug = models.CharField(max_length=200)
@@ -32,6 +39,16 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
+    PUBLISHED = 1
+    DRAFT = 2
+    HIDDEN = 3
+
+    STATUS_CHOICES = (
+        (PUBLISHED, 'Published'),
+        (DRAFT, 'Draft'),
+        (HIDDEN, 'Hidden'),
+    )
+
     title = models.CharField('Titolo',max_length=200)
     content = models.TextField('Contenuto')
     slug = models.CharField(max_length=200)
@@ -40,6 +57,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=PUBLISHED)
 
     def excerpt(self):
         maxChar=250
@@ -52,10 +70,8 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        self.modified_date = datetime.now()
         if not self.id:
             # Newly created object, so set slug
             self.slug= slugify(self.title)
-            self.modified_date = datetime.now()
-            #if self.request:
-                #self.author = self.request.user
         super(Post, self).save(*args, **kwargs)

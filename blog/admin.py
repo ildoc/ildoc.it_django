@@ -4,12 +4,12 @@ from .models import Post, Category, Tag
 
 class PostAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Post', {'fields':['title','content','category','tags']}),
+        ('Post', {'fields':['title', 'content', 'category', 'tags', 'status']}),
         ('Info', {'fields':['pub_date'], 'classes': ['collapse']}),
     ]
 
-    list_display = ('title', 'pub_date')
-    list_filter = ['pub_date', 'modified_date']
+    list_display = ('title', 'pub_date', 'modified_date', 'status')
+    list_filter = ['pub_date', 'modified_date', 'status']
     search_fields = ['title', 'content']
 
     def save_model(self, request, obj, form, change):

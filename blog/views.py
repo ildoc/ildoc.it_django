@@ -7,7 +7,7 @@ from .models import Post, Category, Tag
 
 
 def index(request):
-    post_list = Post.objects.all().prefetch_related('category').prefetch_related('tags').order_by('-pub_date')
+    post_list = Post.objects.filter(status=Post.PUBLISHED).prefetch_related('category').prefetch_related('tags').order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 
     page = request.GET.get('page')
@@ -34,7 +34,7 @@ def detail(request, slug):
 
 def category(request, slug):
     category = Category.objects.get(slug=slug)
-    post_list = Post.objects.filter(category=category).select_related().order_by('-pub_date')
+    post_list = Post.objects.filter(category=category, status=Post.PUBLISHED).select_related().order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 
     page = request.GET.get('page')
@@ -55,7 +55,7 @@ def category(request, slug):
 
 def tag(request, slug):
     tag = Tag.objects.get(slug=slug)
-    post_list = Post.objects.filter(tags=tag).select_related().order_by('-pub_date')
+    post_list = Post.objects.filter(tags=tag, status=Post.PUBLISHED).select_related().order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 
     page = request.GET.get('page')
@@ -103,7 +103,7 @@ def author(request, slug)
 '''
 
 def archives(request):
-    post_list = Post.objects.all()
+    post_list = Post.objects.filter(status=Post.PUBLISHED)
     return render_to_response('archives.html', {
         'post_list': post_list,
         },
