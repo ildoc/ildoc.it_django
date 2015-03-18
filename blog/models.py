@@ -69,6 +69,9 @@ class Post(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return '/' + self.slug
+
     def save(self, *args, **kwargs):
         self.modified_date = datetime.now()
         if not self.id:
