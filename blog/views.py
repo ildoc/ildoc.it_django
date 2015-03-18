@@ -3,6 +3,8 @@ from django.views import generic
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 
+from datetime import datetime
+
 from .models import Post, Category, Tag
 
 
@@ -103,7 +105,8 @@ def author(request, slug)
 '''
 
 def archives(request):
-    post_list = Post.objects.filter(status=Post.PUBLISHED)
+    post_list = Post.objects.filter(status=Post.PUBLISHED).order_by('-pub_date')
+
     return render_to_response('archives.html', {
         'post_list': post_list,
         },

@@ -2,24 +2,10 @@
 {% block title %}{{ SITENAME }} <small>Archivio post</small>{% endblock %}
 {% block content %}
 
-{% for year in dates|groupby( 'date.year' )|reverse %}
-  <a href="#{{ year }}">{{ year }}</a>
-{% endfor %}
-
-{% for year, date_year in dates|groupby( 'date.year' )|reverse %}
-  <span id="{{year}}"></span>
-  <h2>{{ year }}</h2>
-  {% for month, post_list in date_year|groupby( 'date.month' ) %}
-    <h3>{{ post_list[ 0 ].date.strftime( '%B' ) }}</h3>
-    <ul>
-    {% for post in post_list|reverse %}
-      <li>
-        {{ post.date.strftime('%d') }} - <a href="{{ post.url }}">{{ post.title }}</a>
-        {% if post.disqus_comment_count %} - <small>Commenti: {{ post.disqus_comment_count }}</small>{% endif %}
-      </li>
+<ul>
+    {% for post in post_list %}
+        <li>{{ post.pub_date }}: {{ post.title }}</li>
     {% endfor %}
-    </ul>
-  {% endfor %}
-{% endfor %}
+</ul>
 
 {% endblock %}
