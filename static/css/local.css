@@ -2,7 +2,7 @@ body { padding-top: 60px; }
 div.article { padding-top: 20px; }
 div.article h2 { padding-bottom: 10px; }
 
-div.highlight pre {
+div.codehilite pre {
   background-color: #fefbf3;
   margin: 0 0 10px;
 }

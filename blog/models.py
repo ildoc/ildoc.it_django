@@ -3,13 +3,9 @@ from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.utils.html import strip_tags
 
-
-STATUS_CHOICES = (
-    (1, 'Published'),
-    (2, 'Draft'),
-    (3, 'Hidden'),
-)
+from markdown import markdown
 
 
 class Category(models.Model):
@@ -51,6 +47,7 @@ class Post(models.Model):
 
     title = models.CharField('Titolo',max_length=200)
     content = models.TextField('Contenuto')
+    content_html = models.TextField(editable=False, blank=True, null=True)
     slug = models.CharField(max_length=200)
     pub_date = models.DateTimeField('Pubblicato il',default=datetime.now())
     modified_date = models.DateTimeField('Modificato il',default=datetime.now())
@@ -61,10 +58,10 @@ class Post(models.Model):
 
     def excerpt(self):
         maxChar=250
-        if len(self.content)>maxChar:
-            return self.content[:maxChar-3] + '...'
+        if len(strip_tags(self.content_html))>maxChar:
+            return strip_tags(self.content_html)[:maxChar-3] + '...'
         else:
-            return self.content[:maxChar]
+            return strip_tags(self.content_html)[:maxChar]
 
     def __unicode__(self):
         return self.title
@@ -74,6 +71,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.modified_date = datetime.now()
+        self.content_html = markdown(self.content, ['codehilite'])
         if not self.id:
             # Newly created object, so set slug
             self.slug= slugify(self.title)

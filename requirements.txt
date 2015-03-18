@@ -1,5 +1,6 @@
 Django==1.7.6
 Markdown==2.6.1
+Pygments==2.0.2
 django-allauth==0.19.1
 oauthlib==0.7.2
 python-openid==2.2.5
