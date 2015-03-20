@@ -21,7 +21,6 @@ class CategoryAdmin(admin.ModelAdmin):
         ('Category', {'fields': ['title']})
     ]
     list_display = ('title', 'slug')
-    list_filter = ['title']
     search_fields = ['title']
 
 class TagAdmin(admin.ModelAdmin):
@@ -29,7 +28,6 @@ class TagAdmin(admin.ModelAdmin):
         ('Tag', {'fields': ['title']})
     ]
     list_display = ('title', 'slug')
-    list_filter = ['title']
     search_fields = ['title']
 
 admin.site.register(Post, PostAdmin)

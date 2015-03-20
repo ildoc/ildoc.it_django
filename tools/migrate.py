@@ -15,10 +15,9 @@ from django.utils import timezone
 
 from markdown import markdown
 
-#post_folder = "../test"
+
 post_folder = "C:\Projects\ildoc.github.io\content"
 
-tags = ['Title:', 'Date:', 'Modified:', 'Category:', 'Tags:', 'Slug:', 'Authors:']
 
 post_list = [normpath(abspath(join(root,name)))
         for root, dirs, files in walk(post_folder)
@@ -26,15 +25,13 @@ post_list = [normpath(abspath(join(root,name)))
         if name.endswith((".md"))]
 
 def read_metatags(righe):
-    meta = [righe[0].split(' ', 1),
-            righe[1].split(' ', 1),
-            righe[2].split(' ', 1),
-            righe[3].split(' ', 1),
-            righe[4].split(' ', 1),
-            righe[5].split(' ', 1),
-            righe[6].split(' ', 1)]
+    meta = []
+    i=0
+    while righe[i] != '\n':
+        meta.append(righe[i].split(' ', 1))
+        i+=1
     d = dict((meta[i][0], meta[i][1].replace('\n','')) for i in range(len(meta)))
-    d['Content'] = ''.join(righe[7:])
+    d['Content:'] = ''.join(righe[i+1:])
     return d
 
 
@@ -45,16 +42,26 @@ for post in post_list:
     post_metatags = read_metatags(righe)
 
     titolo = post_metatags['Title:']
-    slug = post_metatags['Slug:']
     pub_date = datetime.strptime(post_metatags['Date:'].strip(), '%Y-%m-%d %H:%M')
-    modified_date = datetime.strptime(post_metatags['Modified:'].strip(), '%Y-%m-%d %H:%M')
-    _tags = [x.strip() for x in post_metatags['Tags:'].split(',')]
-    tag_slugs = [slugify(x) for x in _tags]
+    tags = [x.strip() for x in post_metatags['Tags:'].split(',')]
+    tag_slugs = [slugify(x) for x in tags]
     categoria = post_metatags['Category:']
-    content = post_metatags['Content']
+    content = post_metatags['Content:']
+
+    if post_metatags.has_key('Status:'):
+        if post_metatags['Status:'].strip().lower() == 'published':
+            status = Post.PUBLISHED
+        elif post_metatags['Status:'].strip().lower() == 'draft':
+            status = Post.DRAFT
+        elif post_metatags['Status:'].strip().lower() == 'hidden':
+            status = Post.HIDDEN
+        else:
+            status = Post.PUBLISHED
+    else:
+        status = Post.PUBLISHED
 
     #aggiungo le tag
-    for tag in _tags:
+    for tag in tags:
         if Tag.objects.filter(slug=slugify(tag)).count() == 0:
             t = Tag(title=tag, slug=slugify(tag))
             t.save()
@@ -68,6 +75,7 @@ for post in post_list:
     category = Category.objects.get(slug=slugify(categoria))
     posttags = Tag.objects.filter(slug__in=tag_slugs)
     author = User.objects.all().first()
+
     if Post.objects.filter(slug=slug).count() == 0:
         p = Post(
             title=titolo,
@@ -75,7 +83,7 @@ for post in post_list:
             pub_date=pub_date,
             category=category,
             author=author,
-            status=Post.PUBLISHED
+            status=status
         )
         p.save()
         for posttag in posttags:
