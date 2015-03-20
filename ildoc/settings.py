@@ -60,6 +60,7 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'ildoc.context_processors.global_settings',
+    'blog.context_processors.blog_common',
 
     # This is required by allauth template tags
     "django.core.context_processors.request",

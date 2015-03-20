@@ -32,8 +32,8 @@
               <li><a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a></li>
             {% endfor %}
           {% endif %}
-          {% for cat, null in categories %}
-            <li {% if cat == category %}class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+          {% for cat in CATEGORIES %}
+            <li {% if cat == category %}class="active"{% endif %}><a href="{% url 'blog:category' cat.slug %}">{{ cat }}</a></li>
           {% endfor %}
         </ul>
         <p class="pull-right"><a href="{% url 'blog:archives' %}">[archives]</a> <a href="{% url 'blog:taglist' %}">[tags]</a></p>
