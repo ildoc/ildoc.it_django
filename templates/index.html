@@ -12,10 +12,10 @@
 </div>
 {% if latest_post_list %}
   {% for post in latest_post_list %}
-  <div class='post'>
+  <div class='article'>
     <a href="{% url 'blog:detail' post.slug %}"><h2>{{ post.title }}</h2></a>
     <div class="well small">
-      {{ post.pub_date|date:"j M Y H:i" }}
+      {{ post.pub_date|date:"d/M/Y H:m" }}
       by {{ post.author }}
       in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category }}</a>
       | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a> {% endfor %}
