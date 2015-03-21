@@ -6,3 +6,4 @@ oauthlib==0.7.2
 python-openid==2.2.5
 requests==2.5.3
 requests-oauthlib==0.4.2
+django-pagedown==0.1.0

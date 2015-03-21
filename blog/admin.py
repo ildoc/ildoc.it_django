@@ -1,8 +1,15 @@
 from django.contrib import admin
+from django.db import models
+
+from pagedown.widgets import AdminPagedownWidget
 
 from .models import Post, Category, Tag
 
 class PostAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': AdminPagedownWidget },
+    }
+
     fieldsets = [
         ('Post', {'fields':['title', 'content', 'category', 'tags', 'status']}),
         ('Info', {'fields':['pub_date'], 'classes': ['collapse']}),
