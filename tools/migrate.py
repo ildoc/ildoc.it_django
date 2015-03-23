@@ -2,6 +2,7 @@
 20/03/2015
 tool per migrare da pelican a django
 '''
+
 import codecs
 from time import gmtime, strftime
 from os import walk
@@ -27,7 +28,7 @@ post_list = [normpath(abspath(join(root,name)))
 def read_metatags(righe):
     meta = []
     i=0
-    while righe[i] != '\n':
+    while repr(righe[i].encode('utf8')) != repr('\r\n'.encode('utf8')):
         meta.append(righe[i].split(' ', 1))
         i+=1
     d = dict((meta[i][0], meta[i][1].replace('\n','')) for i in range(len(meta)))
@@ -42,6 +43,7 @@ for post in post_list:
     post_metatags = read_metatags(righe)
 
     titolo = post_metatags['Title:']
+    slug = post_metatags['Slug:']
     pub_date = datetime.strptime(post_metatags['Date:'].strip(), '%Y-%m-%d %H:%M')
     tags = [x.strip() for x in post_metatags['Tags:'].split(',')]
     tag_slugs = [slugify(x) for x in tags]
