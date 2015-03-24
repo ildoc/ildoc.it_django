@@ -1,6 +1,8 @@
 *.py[cod]
 *.sqlite3
 
+assets/
+
 /blog/migrations/*
 !/blog/migrations/__init__.py
 

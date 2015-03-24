@@ -1,9 +1,10 @@
 Django==1.7.6
-Markdown==2.6.1
-Pygments==2.0.2
 django-allauth==0.19.1
+django-pagedown==0.1.0
+Markdown==2.6.1
+MySQL-python==1.2.5
 oauthlib==0.7.2
+Pygments==2.0.2
 python-openid==2.2.5
 requests==2.5.3
 requests-oauthlib==0.4.2
-django-pagedown==0.1.0
