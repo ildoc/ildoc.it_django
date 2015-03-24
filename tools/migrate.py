@@ -4,6 +4,7 @@ tool per migrare da pelican a django
 '''
 
 import codecs
+import argparse
 from time import gmtime, strftime
 from os import walk
 from os.path import join, abspath, normpath, getmtime
@@ -17,11 +18,13 @@ from django.utils import timezone
 from markdown import markdown
 
 
-post_folder = "C:\Projects\ildoc.github.io\content"
-
+parser = argparse.ArgumentParser(description='migrate pelican post to django')
+parser.add_argument('-f', '--folder', help='post folder')
+parser.add_argument('-s', '--status', default='published', choices=['published', 'draft', 'hidden'] , help='status')
+args = parser.parse_args()
 
 post_list = [normpath(abspath(join(root,name)))
-        for root, dirs, files in walk(post_folder)
+        for root, dirs, files in walk(folder)
         for name in files
         if name.endswith((".md"))]
 
@@ -50,17 +53,15 @@ for post in post_list:
     categoria = post_metatags['Category:']
     content = post_metatags['Content:']
 
-    if post_metatags.has_key('Status:'):
-        if post_metatags['Status:'].strip().lower() == 'published':
-            status = Post.PUBLISHED
-        elif post_metatags['Status:'].strip().lower() == 'draft':
-            status = Post.DRAFT
-        elif post_metatags['Status:'].strip().lower() == 'hidden':
-            status = Post.HIDDEN
-        else:
-            status = Post.PUBLISHED
-    else:
+    if status == 'published':
         status = Post.PUBLISHED
+        if post_metatags.has_key('Status:'):
+            if post_metatags['Status:'].strip().lower() == 'published':
+                status = Post.PUBLISHED
+            elif post_metatags['Status:'].strip().lower() == 'draft':
+                status = Post.DRAFT
+            elif post_metatags['Status:'].strip().lower() == 'hidden':
+                status = Post.HIDDEN
 
     #aggiungo le tag
     for tag in tags:
