@@ -18,6 +18,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'pub_date', 'modified_date', 'status')
     list_filter = ['pub_date', 'modified_date', 'status']
     search_fields = ['title', 'content']
+    ordering = ['-pub_date']
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user

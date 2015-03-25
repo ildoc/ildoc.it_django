@@ -49,7 +49,7 @@ class Post(models.Model):
     content = models.TextField('Contenuto')
     content_html = models.TextField(editable=False, blank=True, null=True)
     slug = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('Pubblicato il',default=datetime.now())
+    pub_date = models.DateTimeField('Creato il',default=datetime.now())
     modified_date = models.DateTimeField('Modificato il',default=datetime.now())
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
@@ -74,5 +74,10 @@ class Post(models.Model):
         self.content_html = markdown(self.content, ['codehilite'])
         if not self.id:
             # Newly created object, so set slug
-            self.slug= slugify(self.title)
+            self.slug = slugify(self.title)
+            same_slug = Post.objects.filter(slug=self.slug).count()
+
+            if same_slug > 0:
+                self.slug += '-' + str(self.id)
+
         super(Post, self).save(*args, **kwargs)
