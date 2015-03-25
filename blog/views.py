@@ -22,7 +22,7 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('index.html', {
+    return render_to_response('blog/index.html', {
         'latest_post_list': latest_post_list,
         },
         context_instance=RequestContext(request))
@@ -30,7 +30,7 @@ def index(request):
 
 def detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    return render(request, 'detail.html', {'post': post},
+    return render(request, 'blog/detail.html', {'post': post},
     context_instance=RequestContext(request))
 
 
@@ -49,7 +49,7 @@ def category(request, slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('category.html', {
+    return render_to_response('blog/category.html', {
         'latest_post_list': latest_post_list,
         'category': category,
         },
@@ -70,7 +70,7 @@ def tag(request, slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response('tag.html', {
+    return render_to_response('blog/tag.html', {
         'latest_post_list': latest_post_list,
         'tag': tag,
         },
@@ -78,7 +78,7 @@ def tag(request, slug):
 
 def taglist(request):
     tags = Tag.objects.all().order_by('title')
-    return render_to_response('tags.html', {'tags': tags, },
+    return render_to_response('blog/tags.html', {'tags': tags, },
     context_instance=RequestContext(request))
 
 '''
@@ -107,7 +107,7 @@ def author(request, slug)
 def archives(request):
     post_list = Post.objects.filter(status=Post.PUBLISHED).order_by('-pub_date')
 
-    return render_to_response('archives.html', {
+    return render_to_response('blog/archives.html', {
         'post_list': post_list,
         },
         context_instance=RequestContext(request))
