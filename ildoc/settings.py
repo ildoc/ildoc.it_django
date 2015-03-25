@@ -25,7 +25,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.ildoc.it', 'localhost']
 
 
 # Application definition
@@ -95,7 +95,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'it_IT'
 
 TIME_ZONE = 'UTC'
 
@@ -119,8 +119,6 @@ STATICFILES_DIRS = (
     )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-
-GOOGLE_ANALYTICS = 'UA-7958919-14'
 
 try:
     from local_settings import *
