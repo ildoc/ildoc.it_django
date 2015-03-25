@@ -34,7 +34,11 @@
             <li {% if cat == category %}class="active"{% endif %}><a href="{% url 'blog:category' cat.slug %}">{{ cat }}</a></li>
           {% endfor %}
         </ul>
-        <p class="pull-right"><a href="{% url 'blog:archives' %}">[archives]</a> <a href="{% url 'blog:taglist' %}">[tags]</a></p>
+        <p class="pull-right">
+        <a href="{% url 'blog:taglist' %}">[tags]</a>
+        <a href="{% url 'blog:archives' %}">[archives]</a>
+        <a href="{% url 'blog:feeds' %}">[feeds]</a>
+        </p>
       </div>
       </div>
     </div>
