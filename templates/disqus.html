@@ -1,4 +1,5 @@
 {% if post %}
+<!-- Disqus commenti -->
 <script type="text/javascript">
 	var disqus_identifier = "{% url 'blog:detail' post.slug %}";
 	(function() {
@@ -8,3 +9,14 @@
 	})();
 </script>
 {% endif %}
+
+<!-- Discus comment count -->
+<script type="text/javascript">
+	var disqus_shortname = 'ildoc';
+	(function () {
+		var s = document.createElement('script'); s.async = true;
+		s.type = 'text/javascript';
+		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+	}());
+</script>

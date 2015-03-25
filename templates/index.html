@@ -19,6 +19,7 @@
       by {{ post.author }}
       in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category }}</a>
       | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a> {% endfor %}
+      <span class="disqus-comment-count" data-disqus-identifier="{{ post.slug }}"></span>
     </div>
     <div class="summary">{{ post.excerpt|striptags|linebreaksbr }}</div>
     <a class="btn primary xsmall" href="{% url 'blog:detail' post.slug %}">Leggi tutto...</a>
