@@ -120,6 +120,7 @@ STATICFILES_DIRS = (
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
+GOOGLE_ANALYTICS = 'UA-7958919-14'
 
 try:
     from local_settings import *
