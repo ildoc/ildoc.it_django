@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from django.contrib.sitemaps.views import sitemap
 
 from .sitemap import BlogSitemap, ViewSitemap
-
+from .feeds import LatestEntriesFeed
 from . import views
 
 sitemaps = {
@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^$',views.index, name='index'),
 
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+
+    url(r'^feeds/$', LatestEntriesFeed()),
 
     url(r'^archives/$', views.archives, name='archives'),
 

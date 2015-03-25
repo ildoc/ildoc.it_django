@@ -1,3 +1,5 @@
+import itertools
+
 from datetime import datetime
 from django.db import models
 from django.utils import timezone
@@ -73,11 +75,12 @@ class Post(models.Model):
         self.modified_date = datetime.now()
         self.content_html = markdown(self.content, ['codehilite'])
         if not self.id:
-            # Newly created object, so set slug
-            self.slug = slugify(self.title)
-            same_slug = Post.objects.filter(slug=self.slug).count()
-
-            if same_slug > 0:
-                self.slug += '-' + str(self.id)
+            # nuovo oggetto, creo lo slug
+            self.slug = orig = slugify(self.title)
+            # e mi assicuro che sia univoco
+            for x in itertools.count(1):
+                if not Post.objects.filter(slug=self.slug).exists():
+                    break
+                self.slug = '%s-%d' % (orig, x)
 
         super(Post, self).save(*args, **kwargs)
