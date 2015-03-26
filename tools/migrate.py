@@ -3,6 +3,7 @@
 tool per migrare da pelican a django
 '''
 
+import os, sys
 import codecs
 import argparse
 from time import gmtime, strftime
@@ -10,21 +11,36 @@ from os import walk
 from os.path import join, abspath, normpath, getmtime
 from datetime import datetime
 
-from django.template.defaultfilters import slugify
-from blog.models import Post, Category, Tag
-from django.contrib.auth.models import User
-from django.utils import timezone
-
 from markdown import markdown
 
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# This is so Django knows where to find stuff.
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ildoc.settings")
+sys.path.append(BASE_DIR)
+
+# This is so my local_settings.py gets loaded.
+os.chdir(BASE_DIR)
+
+# This is so models get loaded.
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+
+from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
+from django.utils import timezone
+
+from blog.models import Post, Category, Tag
+
 parser = argparse.ArgumentParser(description='migrate pelican post to django')
-parser.add_argument('-f', '--folder', help='post folder')
+parser.add_argument('-f', '--folder', help='post folder', required=True)
 parser.add_argument('-s', '--status', default='published', choices=['published', 'draft', 'hidden'] , help='status')
 args = parser.parse_args()
 
 post_list = [normpath(abspath(join(root,name)))
-        for root, dirs, files in walk(folder)
+        for root, dirs, files in walk(args.folder)
         for name in files
         if name.endswith((".md"))]
 
@@ -53,7 +69,7 @@ for post in post_list:
     categoria = post_metatags['Category:']
     content = post_metatags['Content:']
 
-    if status == 'published':
+    if args.status == 'published':
         status = Post.PUBLISHED
         if post_metatags.has_key('Status:'):
             if post_metatags['Status:'].strip().lower() == 'published':
