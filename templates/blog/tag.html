@@ -1,3 +1,5 @@
 {% extends "blog/index.html" %}
 {% block windowtitle %}[{{ tag }}] - {{ SITENAME }}{% endblock %}
+{% block meta_keywords %}{{ tag }}{% endblock %}
+{% block meta_description %}Post taggati con {{ tag }}{% endblock %}
 {% block title %}{{ SITENAME }} <small> Post taggati con <strong>{{ tag }}</strong></small>{% endblock %}
