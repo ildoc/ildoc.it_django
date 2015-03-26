@@ -11,8 +11,7 @@ class PostAdmin(admin.ModelAdmin):
     }
 
     fieldsets = [
-        ('Post', {'fields':['title', 'content', 'category', 'tags', 'status']}),
-        ('Info', {'fields':['pub_date'], 'classes': ['collapse']}),
+        ('Post', {'fields':['title', 'content', 'category', 'tags', 'status']})
     ]
 
     list_display = ('title', 'pub_date', 'modified_date', 'status')

@@ -15,6 +15,8 @@
     {% block additional_head %}{% endblock %}
 
   <title>{% block windowtitle %}{{ SITENAME }}{% endblock %}</title>
+  <meta name="keywords" content="ildoc, {% block meta_keywords %}{% endblock %}" />
+	<meta name="description" content="{% block meta_description %}{% endblock %}" />
   </head>
   <body>
     <div class="topbar">
@@ -49,15 +51,12 @@
         {% block content %}{% endblock %}
         <footer>
           <p>Powered by <a href="http://djangoproject.com/">Django</a>. Theme based on <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>.</p>
-          <p>&copy; Doc | 2007-<span id="currentYear"></span> | v. {{ VERSION }}</p>
+          <p>&copy; Doc | 2007-{{ CURRENTYEAR }}</p>
         </footer>
       </div>
       {% include "blog/sidebar.html" %}
     </div>
     {% include "blog/disqus.html" %}
     {% include "analytics.html" %}
-    <script>
-      document.getElementById("currentYear").innerHTML = new Date().getFullYear();
-    </script>
   </body>
   </html>

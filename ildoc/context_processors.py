@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.conf import settings
 
 def global_settings(request):
     return {
-            'VERSION': settings.VERSION,
             'SITENAME': settings.SITENAME,
+            'CURRENTYEAR': datetime.now().year
             }
