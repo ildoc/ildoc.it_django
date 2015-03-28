@@ -15,7 +15,7 @@
 {% if latest_post_list %}
   {% for post in latest_post_list %}
   <div class='article'>
-    <a href="{% url 'blog:detail' post.slug %}"><h2>{{ post.title }}</h2></a>
+    <h2><a href="{% url 'blog:detail' post.slug %}" class="post-title">{{ post.title }}</a></h2>
     <div class="well small">
       {{ post.pub_date|date:"d/M/Y H:m" }}
       by {{ post.author }}
@@ -24,7 +24,7 @@
       <span class="disqus-comment-count" data-disqus-identifier="{{ post.slug }}"></span>
     </div>
     <div class="summary">{{ post.excerpt|striptags|linebreaksbr }}</div>
-    <a class="btn primary xsmall" href="{% url 'blog:detail' post.slug %}">Leggi tutto...</a>
+    <a class="btn btn-primary btn-xs" href="{% url 'blog:detail' post.slug %}">Leggi tutto...</a>
   </div>
   {% endfor %}
   <div class="pagination">

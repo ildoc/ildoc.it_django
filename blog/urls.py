@@ -15,6 +15,8 @@ urlpatterns = patterns('',
 
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
+    #url(r'^add/$', views.add_post, name='add_post'),
+
     url(r'^feeds/$', LatestEntriesFeed(), name='feeds'),
 
     url(r'^archives/$', views.archives, name='archives'),
