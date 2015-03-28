@@ -5,5 +5,4 @@ from django.conf import settings
 def global_settings(request):
     return {
             'SITENAME': settings.SITENAME,
-            'CURRENTYEAR': datetime.now().year
             }

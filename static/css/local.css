@@ -34,9 +34,3 @@ div.codehilite pre {
 
 .summary * { display: inline; }
 .summary pre { display: none; }
-
-.social a[href*='github.com']:before {content: url('../images/icons/github.png'); margin-right: 5px; vertical-align: -3px;}
-.social a[href*='last.fm']:before, .social a[href*='lastfm.']:before {content: url('../images/icons/lastfm.png'); margin-right: 5px; vertical-align: -3px;}
-.social a[href*='linkedin.com']:before {content: url('../images/icons/linkedin.png'); margin-right: 5px; vertical-align: -3px;}
-.social a[href*='stackoverflow.com']:before {content: url('../images/icons/stackoverflow.png'); margin-right: 5px; vertical-align: -3px;}
-.social a[href*='twitter.com']:before {content: url('../images/icons/twitter.png'); margin-right: 5px; vertical-align: -3px;}
