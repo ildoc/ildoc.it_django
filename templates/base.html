@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static from staticfiles %}
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/local.css' %}" rel="stylesheet">
     <link href="{% static 'css/pygments.css' %}" rel="stylesheet">
 
@@ -59,11 +59,12 @@
       </div>
       <footer>
         <p>Powered by <a href="http://djangoproject.com/">Django</a>. Theme based on <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>.</p>
-        <p>&copy; Doc | 2007-{{ CURRENTYEAR }}</p>
+        <p>&copy; Doc | 2007-{{ CURRENTYEAR }} | <a href="https://github.com/ildoc/ildoc.it">source</a></p>
       </footer>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     {% include "blog/disqus.html" %}
     {% include "analytics.html" %}
   </body>

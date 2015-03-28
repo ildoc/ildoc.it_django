@@ -7,3 +7,6 @@ assets/
 !/blog/migrations/__init__.py
 
 ildoc/local_settings.py
+
+access.log
+error.log

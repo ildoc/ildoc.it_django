@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block windowtitle %}Tutte le citazioni - {{ block.super }}{% endblock %}
+{% block title %}{{ SITENAME }} <small>Tutte le citazioni</small>{% endblock %}
+{% block meta_keywords %}citazioni{% endblock %}
+{% block meta_description %}Tutte le citazioni{% endblock %}
+{% block content %}
+
+{% for quote in quote_list %}
+  <blockquote>
+    {{ quote.text }}
+    <footer>
+      <strong>{{ quote.author }}</strong>{% if quote.url != '' %} - <a href="{{ quote.url }}">Link</a>{% endif %}
+    </footer>
+  </blockquote>
+{% endfor %}
+
+{% endblock %}

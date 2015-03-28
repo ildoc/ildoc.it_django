@@ -1,17 +1,13 @@
 {% extends "base.html" %}
-{% load static from staticfiles %}
 
 {% block windowtitle %}{{ SITENAME }}{% endblock %}
 {% block meta_keywords %}blog{% endblock %}
 {% block meta_description %}{% endblock %}
-{% block additional_head %}
-<script src="{% static 'js/quotes.js' %}"></script>
-{% endblock %}
 
 {% block content %}
-<div id="quote" class ="well small">
-<script>document.write(getrandomquote());</script>
-</div>
+<blockquote id="quote" class ="well small">
+{{ RANDOMQUOTE.text }}<footer class="quote-details"><strong>{{ RANDOMQUOTE.author }}</strong>{% if RANDOMQUOTE.url != '' %} - <a href="{{ RANDOMQUOTE.url }}">Link</a>{% endif %}</footer>
+</blockquote>
 {% if latest_post_list %}
   {% for post in latest_post_list %}
   <div class='article'>

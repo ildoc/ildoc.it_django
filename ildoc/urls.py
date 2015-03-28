@@ -8,5 +8,7 @@ urlpatterns = patterns('',
 
     #url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
+    url(r'^quotes/', include('quotes.urls', namespace='quotes')),
+
     url(r'^', include('blog.urls', namespace='blog')),
 )
