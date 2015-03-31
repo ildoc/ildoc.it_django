@@ -93,7 +93,7 @@ def tag(request, slug):
         )
 
 def taglist(request):
-    tags = Tag.objects.all().order_by('title')
+    tags = Tag.objects.filter(pk__in = Post.objects.filter(status=Post.PUBLISHED).values('tags')).order_by('title')
     return render_to_response(
             'blog/tags.html',
             {'tags': tags, },
