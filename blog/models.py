@@ -30,6 +30,9 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.title
 
+    def count(self):
+        return Post.objects.filter(tags=self, status=Post.PUBLISHED).count()
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug= slugify(self.title)

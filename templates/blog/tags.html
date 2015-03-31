@@ -6,7 +6,7 @@
 {% block content %}
 <ul>
 {% for tag in tags %}
-  <li><a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a></li>
+  <li><a href="{% url 'blog:tag' tag.slug %}">{{ tag.title }}</a> ({{ tag.count }})</li>
 {% endfor %}
 </ul>
 {% endblock %}

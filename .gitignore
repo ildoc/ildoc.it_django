@@ -6,6 +6,9 @@ assets/
 /blog/migrations/*
 !/blog/migrations/__init__.py
 
+/quotes/migrations/*
+!/quotes/migrations/__init__.py
+
 ildoc/local_settings.py
 
 access.log
