@@ -4,6 +4,8 @@ from django.conf import settings
 #from django.contrib.sitemaps.views import sitemap
 
 urlpatterns = patterns('',
+    (r'^accounts/', include('allauth.urls')),
+
     url(r'^admin/', include(admin.site.urls)),
 
     #url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),

@@ -60,7 +60,12 @@
       </div>
       <footer>
         <p>Powered by <a href="http://djangoproject.com/">Django</a>. Theme based on <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>.</p>
-        <p>&copy; Doc | 2007-{% now "Y" %} | <a href="https://github.com/ildoc/ildoc.it"><i class="fa fa-code" title="Source code on GitHub"></i></a></p>
+        <p>&copy; Doc | 2007-{% now "Y" %} | <a href="https://github.com/ildoc/ildoc.it"><i class="fa fa-code" title="Source code on GitHub"></i></a> |
+          {% if not user.is_authenticated %}
+            <a href="{% url 'account_login' %}"><i class="fa fa-sign-in" title="Login"></i></a>
+          {% else %}
+            <a href="{% url 'account_logout' %}"><i class="fa fa-sign-out" title="Login"></i></a>
+          {% endif %}</p>
       </footer>
     </div>
 

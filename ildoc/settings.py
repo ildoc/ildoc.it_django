@@ -81,6 +81,7 @@ ROOT_URLCONF = 'ildoc.urls'
 
 WSGI_APPLICATION = 'ildoc.wsgi.application'
 
+LOGIN_REDIRECT_URL = "/"
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
