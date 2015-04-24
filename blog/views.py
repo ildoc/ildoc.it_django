@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import generic
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
+from django.contrib.auth.decorators import permission_required
 
 from datetime import datetime
 
@@ -134,6 +135,7 @@ def archives(request):
             context_instance=RequestContext(request)
         )
 
+@permission_required('blog.add_post', raise_exception=True)
 def add_post(request):
     if request.method == 'POST':
         form = PostForm(data=request.POST)

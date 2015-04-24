@@ -14,7 +14,7 @@ class PostAdmin(admin.ModelAdmin):
         ('Post', {'fields':['title', 'content', 'category', 'tags', 'status']})
     ]
 
-    list_display = ('title', 'pub_date', 'modified_date', 'status')
+    list_display = ('title', 'creation_date', 'pub_date', 'modified_date', 'status')
     list_filter = ['pub_date', 'modified_date', 'status']
     search_fields = ['title', 'content']
     ordering = ['-pub_date']
