@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, get_object_or_404, render_to_response, HttpResponseRedirect
 from django.views import generic
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
@@ -143,7 +143,10 @@ def add_post(request):
             model_instance = form.save(commit=False)
             model_instance.author = request.user
             model_instance.save()
+            form.save_m2m()
             return HttpResponseRedirect("/")
+        else:
+            print form.errors
     else:
         form = PostForm()
     return render_to_response(
