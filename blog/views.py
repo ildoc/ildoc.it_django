@@ -3,6 +3,8 @@ from django.views import generic
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from django.contrib.auth.decorators import permission_required
+from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
 from datetime import datetime
 
@@ -46,7 +48,11 @@ def detail(request, slug):
 
 
 def category(request, slug):
-    category = Category.objects.get(slug=slug)
+    try:
+        category = Category.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        raise Http404
+
     post_list = Post.objects.filter(category=category, status=Post.PUBLISHED).select_related().order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 
@@ -70,7 +76,11 @@ def category(request, slug):
         )
 
 def tag(request, slug):
-    tag = Tag.objects.get(slug=slug)
+    try:
+        tag = Tag.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        raise Http404
+
     post_list = Post.objects.filter(tags=tag, status=Post.PUBLISHED).select_related().order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 

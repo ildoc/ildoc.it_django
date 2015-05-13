@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'pagedown',
-    #'rest_framework',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
