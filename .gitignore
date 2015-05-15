@@ -9,6 +9,9 @@ assets/
 /quotes/migrations/*
 !/quotes/migrations/__init__.py
 
+/snippets/migrations/*
+!/snippets/migrations/__init__.py
+
 ildoc/local_settings.py
 
 access.log

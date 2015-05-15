@@ -40,6 +40,7 @@ INSTALLED_APPS = (
 
     'blog',
     'quotes',
+    'snippets',
 
     'allauth',
     'allauth.account',

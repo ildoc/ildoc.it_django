@@ -11,5 +11,7 @@ urlpatterns = patterns('',
 
     url(r'^quotes/', include('quotes.urls', namespace='quotes')),
 
+    url(r'^snippets/', include('snippets.urls')),
+
     url(r'^', include('blog.urls', namespace='blog')),
 )
