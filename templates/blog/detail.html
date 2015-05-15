@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block windowtitle %}{{ post.title }} - {{ block.super }}{% endblock %}
 {% block indextitle %}<div class="page-header"><h1>{{ post.title }}</h1></div>{% endblock %}
-{% block meta_keywords %}{% for tag in post.tags.all %}{{ tag }}, {% endfor %}{% endblock %}
+{% block meta_keywords %}{% for tag in post.tags.all %}{{ tag.title }}, {% endfor %}{% endblock %}
 {% block meta_description %}{{ post.excerpt|striptags }}{% endblock %}
 {% block content %}
   <div class="well small">
     {{ post.pub_date|date:"j M Y H:i" }}
     by {{ post.author }}
-    in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category }}</a>
-    | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a> {% endfor %}
+    in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category.title }}</a>
+    | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag.title }}</a> {% endfor %}
   </div>
   <div>{{ post.content_html|safe }}</div>
   <div>
