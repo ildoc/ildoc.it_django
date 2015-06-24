@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 {% block windowtitle %}Elenco tag - {{ block.super }}{% endblock %}
 {% block meta_keywords %}blog, tag{% endblock %}
@@ -10,3 +11,17 @@
 {% endfor %}
 </ul>
 {% endblock %}
+=======
+{% extends "base.html" %}
+{% block windowtitle %}Elenco tag - {{ block.super }}{% endblock %}
+{% block meta_keywords %}blog, tag{% endblock %}
+{% block meta_description %}Elenco tag{% endblock %}
+{% block title %}{{ SITENAME }} <small>Elenco tag</small>{% endblock %}
+{% block content %}
+<ul>
+{% for tag in tags %}
+  <li><a href="{% url 'blog:tag' tag.slug %}">{{ tag.title }}</a> ({{ tag.count }})</li>
+{% endfor %}
+</ul>
+{% endblock %}
+>>>>>>> 6f6af9a4469fbf40c200aa42607a50fe39af14e5

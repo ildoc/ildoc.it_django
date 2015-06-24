@@ -71,7 +71,7 @@ for post in post_list:
 
     if args.status == 'published':
         status = Post.PUBLISHED
-        if post_metatags.has_key('Status:'):
+        if 'Status:' in post_metatags:
             if post_metatags['Status:'].strip().lower() == 'published':
                 status = Post.PUBLISHED
             elif post_metatags['Status:'].strip().lower() == 'draft':
@@ -108,4 +108,4 @@ for post in post_list:
         for posttag in posttags:
             p.tags.add(posttag)
 
-        print 'creato : ' + titolo
+        print('creato : ', titolo)

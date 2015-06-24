@@ -1,4 +1,3 @@
-from django.conf import settings
 from .models import Category, Post
 
 def blog_common(request):

@@ -40,11 +40,13 @@ INSTALLED_APPS = (
 
     'blog',
     'quotes',
+    'snippets',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'pagedown',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -81,6 +83,7 @@ ROOT_URLCONF = 'ildoc.urls'
 
 WSGI_APPLICATION = 'ildoc.wsgi.application'
 
+LOGIN_REDIRECT_URL = "/"
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -96,6 +99,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
 LANGUAGE_CODE = 'it_IT'
+#LANGUAGE_CODE = 'en_US'
 
 TIME_ZONE = 'UTC'
 

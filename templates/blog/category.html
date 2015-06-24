@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 {% extends "blog/index.html" %}
 {% block windowtitle %}[{{ category }}] - {{ block.super }}{% endblock %}
 {% block meta_keywords %}{{ category }}{% endblock %}
 {% block meta_description %}Post della categoria {{ category }}{% endblock %}
 {% block title %}{{ SITENAME }} <small>Post della categoria <strong>{{ category }}</strong></small>{% endblock %}
+=======
+{% extends "blog/index.html" %}
+{% block windowtitle %}[{{ category.title }}] - {{ block.super }}{% endblock %}
+{% block meta_keywords %}{{ category.title }}{% endblock %}
+{% block meta_description %}Post della categoria {{ category.title }}{% endblock %}
+{% block title %}{{ SITENAME }} <small>Post della categoria <strong>{{ category.title }}</strong></small>{% endblock %}
+>>>>>>> 6f6af9a4469fbf40c200aa42607a50fe39af14e5

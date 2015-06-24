@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 {% block windowtitle %}Aggiungi post - {{ block.super }}{% endblock %}
 {% block title %}{{ SITENAME }} <small>Aggiungi post</small>{% endblock %}
@@ -7,3 +8,29 @@
 {% include "blog/post_form.html" with postformtitle="Aggiungi Post" postformbutton="Aggiungi" %}
 
 {% endblock %}
+=======
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block windowtitle %}Aggiungi post - {{ block.super }}{% endblock %}
+{% block title %}{{ SITENAME }} <small>Aggiungi post</small>{% endblock %}
+{% block meta_description %}Aggiungi post{% endblock %}
+{% block additional_head %}
+<link rel="stylesheet" href="{% static 'lib/select2-4.0.0-rc.2/dist/css/select2.min.css' %}"/>
+{% endblock %}
+{% block additional_footer %}
+<script src="{% static 'lib/select2-4.0.0-rc.2/dist/js/select2.min.js' %}"></script>
+<script>
+$(document).ready(function() {
+  $("#id_tags").select2({
+    tags: true,
+    tokenSeparators: [',', ' ']
+  })
+});
+</script>
+{% endblock %}
+{% block content %}
+
+{% include "blog/post_form.html" with postformtitle="Aggiungi Post" postformbutton="Aggiungi" %}
+
+{% endblock %}
+>>>>>>> 6f6af9a4469fbf40c200aa42607a50fe39af14e5

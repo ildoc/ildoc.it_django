@@ -1,6 +1,5 @@
 import os
-import urllib
-import urlparse
+import urllib.request, urllib.parse, urllib.error
 from bs4 import BeautifulSoup
 from markdown import markdown
 
@@ -9,7 +8,7 @@ from blog.models import Post
 
 
 def is_absolute(url):
-    return bool(urlparse.urlparse(url).netloc)
+    return bool(urllib.parse.urlparse(url).netloc)
 
 posts = Post.objects.all()
 image_folder = os.path.join(settings.BASE_DIR, "static\\images\\posts")
@@ -20,6 +19,6 @@ for post in posts:
     for img in imgs:
         imgurl = img['src']
         if is_absolute(imgurl):
-            print imgurl
-            urllib.urlretrieve(imgurl, os.path.join(image_folder, os.path.join(image_folder, imgurl.split('/')[-1])))
-            print 'salvata'
+            print(imgurl)
+            urllib.request.urlretrieve(imgurl, os.path.join(image_folder, os.path.join(image_folder, imgurl.split('/')[-1])))
+            print('salvata')

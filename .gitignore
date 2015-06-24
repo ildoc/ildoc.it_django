@@ -3,8 +3,8 @@
 
 assets/
 
-/blog/migrations/*
-!/blog/migrations/__init__.py
+/*/migrations/*
+!/*/migrations/__init__.py
 
 ildoc/local_settings.py
 

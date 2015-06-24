@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, get_object_or_404, render_to_response, HttpResponseRedirect
 from django.views import generic
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
+from django.contrib.auth.decorators import permission_required
+from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
 from datetime import datetime
 
@@ -45,7 +48,11 @@ def detail(request, slug):
 
 
 def category(request, slug):
-    category = Category.objects.get(slug=slug)
+    try:
+        category = Category.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        raise Http404
+
     post_list = Post.objects.filter(category=category, status=Post.PUBLISHED).select_related().order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 
@@ -69,7 +76,11 @@ def category(request, slug):
         )
 
 def tag(request, slug):
-    tag = Tag.objects.get(slug=slug)
+    try:
+        tag = Tag.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        raise Http404
+
     post_list = Post.objects.filter(tags=tag, status=Post.PUBLISHED).select_related().order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 
@@ -93,7 +104,7 @@ def tag(request, slug):
         )
 
 def taglist(request):
-    tags = Tag.objects.all().order_by('title')
+    tags = Tag.objects.filter(pk__in = Post.objects.filter(status=Post.PUBLISHED).values('tags')).order_by('title')
     return render_to_response(
             'blog/tags.html',
             {'tags': tags, },
@@ -134,6 +145,7 @@ def archives(request):
             context_instance=RequestContext(request)
         )
 
+@permission_required('blog.add_post', raise_exception=True)
 def add_post(request):
     if request.method == 'POST':
         form = PostForm(data=request.POST)
@@ -141,6 +153,7 @@ def add_post(request):
             model_instance = form.save(commit=False)
             model_instance.author = request.user
             model_instance.save()
+            form.save_m2m()
             return HttpResponseRedirect("/")
     else:
         form = PostForm()
