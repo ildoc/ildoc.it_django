@@ -155,8 +155,6 @@ def add_post(request):
             model_instance.save()
             form.save_m2m()
             return HttpResponseRedirect("/")
-        else:
-            print form.errors
     else:
         form = PostForm()
     return render_to_response(

@@ -14,7 +14,7 @@ class Category(models.Model):
     title = models.CharField('Categoria', max_length=200)
     slug = models.CharField(max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
@@ -27,7 +27,7 @@ class Tag(models.Model):
     title = models.CharField('Tag', max_length=200)
     slug = models.CharField(max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def count(self):
@@ -69,7 +69,7 @@ class Post(models.Model):
         else:
             return strip_tags(self.content_html)[:maxChar]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):
