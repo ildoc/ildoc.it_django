@@ -40,13 +40,13 @@ INSTALLED_APPS = (
 
     'blog',
     'quotes',
-    'snippets',
+    #'snippets',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'pagedown',
-    'rest_framework',
+    #'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (

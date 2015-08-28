@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import permission_required
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.template.defaultfilters import slugify
 
 from datetime import datetime
 
@@ -148,6 +149,16 @@ def archives(request):
 @permission_required('blog.add_post', raise_exception=True)
 def add_post(request):
     if request.method == 'POST':
+
+        print(request.POST)
+        tags = request.POST.getlist('tags')
+        tags_added=[]
+        for tag in tags:
+            t, created = Tag.objects.get_or_create(title=tag)
+            if created:
+                tags_added.append(tag)
+        request.POST.setlist('tags', Tag.objects.filter(slug__in=[slugify(tag) in tags]))
+
         form = PostForm(data=request.POST)
         if form.is_valid():
             model_instance = form.save(commit=False)
@@ -155,6 +166,8 @@ def add_post(request):
             model_instance.save()
             form.save_m2m()
             return HttpResponseRedirect("/")
+        else:
+            print (form.errors)
     else:
         form = PostForm()
     return render_to_response(

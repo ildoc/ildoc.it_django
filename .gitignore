@@ -2,15 +2,10 @@
 *.sqlite3
 
 assets/
+*/__pycache__
 
-/blog/migrations/*
-!/blog/migrations/__init__.py
-
-/quotes/migrations/*
-!/quotes/migrations/__init__.py
-
-/snippets/migrations/*
-!/snippets/migrations/__init__.py
+*/migrations/*
+!/*/migrations/__init__.py
 
 ildoc/local_settings.py
 
