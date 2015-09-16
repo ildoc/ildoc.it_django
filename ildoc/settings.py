@@ -65,11 +65,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'quotes.context_processors.quotes_common',
 
     # This is required by allauth template tags
-    "django.core.context_processors.request",
-    "django.contrib.auth.context_processors.auth",
-    # These are allauth specific context processors
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',    
 )
 
 AUTHENTICATION_BACKENDS = (
