@@ -40,13 +40,13 @@ INSTALLED_APPS = (
 
     'blog',
     'quotes',
-    'snippets',
+    #'snippets',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'pagedown',
-    'rest_framework',
+    #'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,11 +65,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'quotes.context_processors.quotes_common',
 
     # This is required by allauth template tags
-    "django.core.context_processors.request",
-    "django.contrib.auth.context_processors.auth",
-    # These are allauth specific context processors
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',    
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -125,6 +122,6 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
