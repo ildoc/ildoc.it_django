@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-{% extends "base.html" %}
-{% block windowtitle %}Aggiungi post - {{ block.super }}{% endblock %}
-{% block title %}{{ SITENAME }} <small>Aggiungi post</small>{% endblock %}
-{% block meta_description %}Aggiungi post{% endblock %}
-{% block content %}
-
-{% include "blog/post_form.html" with postformtitle="Aggiungi Post" postformbutton="Aggiungi" %}
-
-{% endblock %}
-=======
 {% extends "base.html" %}
 {% load static from staticfiles %}
 {% block windowtitle %}Aggiungi post - {{ block.super }}{% endblock %}
@@ -33,4 +22,3 @@ $(document).ready(function() {
 {% include "blog/post_form.html" with postformtitle="Aggiungi Post" postformbutton="Aggiungi" %}
 
 {% endblock %}
->>>>>>> 6f6af9a4469fbf40c200aa42607a50fe39af14e5

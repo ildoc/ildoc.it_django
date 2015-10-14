@@ -1,49 +1,3 @@
-<<<<<<< HEAD
-{% extends "base.html" %}
-
-{% block windowtitle %}{{ SITENAME }}{% endblock %}
-{% block meta_keywords %}blog{% endblock %}
-{% block meta_description %}{% endblock %}
-
-{% block content %}
-<blockquote id="quote" class ="well small">
-{{ RANDOMQUOTE.text }}<footer class="quote-details"><strong>{{ RANDOMQUOTE.author }}</strong>{% if RANDOMQUOTE.url != '' %} - <a href="{{ RANDOMQUOTE.url }}">Link</a>{% endif %}</footer>
-</blockquote>
-{% if latest_post_list %}
-  {% for post in latest_post_list %}
-  <div class='article'>
-    <h2><a href="{% url 'blog:detail' post.slug %}" class="post-title">{{ post.title }}</a></h2>
-    <div class="well small">
-      {{ post.pub_date|date:"d/M/Y H:m" }}
-      by {{ post.author }}
-      in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category }}</a>
-      | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag }}</a> {% endfor %}
-      <span class="disqus-comment-count" data-disqus-identifier="{{ post.slug }}"></span>
-    </div>
-    <div class="summary">{{ post.excerpt|striptags|linebreaksbr }}</div>
-    <a class="btn btn-primary btn-xs" href="{% url 'blog:detail' post.slug %}">Leggi tutto...</a>
-  </div>
-  {% endfor %}
-  <div class="pagination">
-    <span class="step-links">
-        {% if latest_post_list.has_previous %}
-            <a href="?page={{ latest_post_list.previous_page_number }}"><</a>
-        {% endif %}
-
-        <span class="current">
-            Pagina {{ latest_post_list.number }} di {{ latest_post_list.paginator.num_pages }}
-        </span>
-
-        {% if latest_post_list.has_next %}
-            <a href="?page={{ latest_post_list.next_page_number }}">></a>
-        {% endif %}
-    </span>
-</div>
-{% else %}
-  <p>Nessun post disponibile</p>
-{% endif %}
-{% endblock %}
-=======
 {% extends "base.html" %}
 
 {% block windowtitle %}{{ SITENAME }}{% endblock %}
@@ -94,4 +48,3 @@
   <p>Nessun post disponibile</p>
 {% endif %}
 {% endblock %}
->>>>>>> 6f6af9a4469fbf40c200aa42607a50fe39af14e5

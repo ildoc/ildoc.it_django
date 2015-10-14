@@ -78,6 +78,10 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.modified_date = datetime.now()
         self.content_html = markdown(self.content, ['codehilite'])
+        
+        if self.status == PUBLISHED:
+            self.pub_date = datetime.now()
+
         if not self.id:
             # nuovo oggetto, creo lo slug
             self.slug = orig = slugify(self.title)
