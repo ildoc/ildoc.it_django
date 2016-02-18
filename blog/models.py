@@ -2,15 +2,16 @@ import itertools
 
 from datetime import datetime
 from django.db import models
-from django.utils import timezone
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.utils.html import strip_tags
 
+from core.models import BaseModel
+
 from markdown import markdown
 
 
-class Category(models.Model):
+class Category(BaseModel):
     title = models.CharField('Categoria', max_length=200)
     slug = models.CharField(max_length=200)
 
@@ -19,11 +20,11 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.slug= slugify(self.title)
+            self.slug = slugify(self.title)
         super(Category, self).save(*args, **kwargs)
 
 
-class Tag(models.Model):
+class Tag(BaseModel):
     title = models.CharField('Tag', max_length=200)
     slug = models.CharField(max_length=200)
 
@@ -35,11 +36,11 @@ class Tag(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.slug= slugify(self.title)
+            self.slug = slugify(self.title)
         super(Tag, self).save(*args, **kwargs)
 
 
-class Post(models.Model):
+class Post(BaseModel):
     PUBLISHED = 1
     DRAFT = 2
     HIDDEN = 3
@@ -50,7 +51,7 @@ class Post(models.Model):
         (HIDDEN, 'Hidden'),
     )
 
-    title = models.CharField('Titolo',max_length=200)
+    title = models.CharField('Titolo', max_length=200)
     content = models.TextField('Contenuto')
     content_html = models.TextField(editable=False, blank=True, null=True)
     slug = models.CharField(max_length=200)
@@ -63,9 +64,9 @@ class Post(models.Model):
     status = models.IntegerField(choices=STATUS_CHOICES, default=PUBLISHED)
 
     def excerpt(self):
-        maxChar=250
-        if len(strip_tags(self.content_html))>maxChar:
-            return strip_tags(self.content_html)[:maxChar-3] + '...'
+        maxChar = 250
+        if len(strip_tags(self.content_html)) > maxChar:
+            return strip_tags(self.content_html)[:maxChar - 3] + '...'
         else:
             return strip_tags(self.content_html)[:maxChar]
 
@@ -76,9 +77,8 @@ class Post(models.Model):
         return '/' + self.slug
 
     def save(self, *args, **kwargs):
-        self.modified_date = datetime.now()
         self.content_html = markdown(self.content, ['codehilite'])
-        
+
         if self.status == PUBLISHED:
             self.pub_date = datetime.now()
 

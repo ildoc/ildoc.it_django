@@ -27,7 +27,8 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_post_list = paginator.page(paginator.num_pages)
 
-    return render_to_response(
+    return render(
+        None,
         'blog/index.html',
         {
             'latest_post_list': latest_post_list,

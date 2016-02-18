@@ -1,12 +1,17 @@
 {% extends "base.html" %}
-{% block windowtitle %}Elenco tag - {{ block.super }}{% endblock %}
-{% block meta_keywords %}blog, tag{% endblock %}
-{% block meta_description %}Elenco tag{% endblock %}
-{% block title %}{{ SITENAME }} <small>Elenco tag</small>{% endblock %}
+{% block title %} &ndash; Tags{% endblock %}
+
 {% block content %}
-<ul>
-{% for tag in tags %}
-  <li><a href="{% url 'blog:tag' tag.slug %}">{{ tag.title }}</a> ({{ tag.count }})</li>
-{% endfor %}
-</ul>
+<article>
+  <header>
+    <h1>Tags</h1>
+  </header>
+  <div>
+    <ul class="list">
+      {%- for tag, articles in tags|sort %}
+          <li><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a> ({{ articles|count }})</li>
+      {% endfor %}
+    </ul>
+  </div>
+</article>
 {% endblock %}

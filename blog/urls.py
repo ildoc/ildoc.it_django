@@ -1,17 +1,17 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib.sitemaps.views import sitemap
 
-from .sitemap import BlogSitemap, ViewSitemap
+from .sitemap import BlogSitemap
 from .feeds import LatestEntriesFeed
 from . import views
 
 sitemaps = {
     "blog": BlogSitemap,
-    #"view": ViewSitemap,
+    # "view": ViewSitemap,
 }
 
-urlpatterns = patterns('',
-    url(r'^$',views.index, name='index'),
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
 
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
@@ -27,4 +27,4 @@ urlpatterns = patterns('',
     url(r'^category/(?P<slug>[\w-]+)/$', views.category, name='category'),
 
     url(r'^(?P<slug>[\w-]+)/$', views.detail, name='detail'),
-)
+]

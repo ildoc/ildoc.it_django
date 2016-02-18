@@ -1,7 +1,7 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from . import views
 
-urlpatterns = patterns('',
-    url(r'^$',views.all_quotes, name='all_quotes'),
-)
+urlpatterns = [
+    url(r'^$', views.all_quotes, name='all_quotes'),
+]

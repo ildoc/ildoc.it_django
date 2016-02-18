@@ -1,80 +1,86 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
-<html lang="it">
+<html lang="{{ DEFAULT_LANG }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% load static from staticfiles %}
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/pygments.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
 
-    <link href="{% static 'lib/bootstrap-3.3.4-dist/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/local.css' %}" rel="stylesheet">
-    <link href="{% static 'css/pygments.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/font-awesome-4.3.0/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% url 'blog:feeds' %}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS">
 
-    <link href="{% static 'favicon.ico' %}" rel='shortcut icon' type='image/x-icon' />
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  {% block meta %}
+  <meta name="author" content="{{ AUTHOR }}" />
+  <meta name="description" content="{{ SITEDESCRIPTION }}" />
 
-    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
-
-    {% block additional_head %}{% endblock %}
-
-  <title>{% block windowtitle %}{{ SITENAME }}{% endblock %}</title>
-  <meta name="keywords" content="ildoc, {% block meta_keywords %}{% endblock %}" />
-  <meta name="description" content="{% block meta_description %}{% endblock %}" />
-  </head>
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-navbar-collapse">
-          <ul class="nav navbar-nav">
-            {% for cat in CATEGORIES %}
-              <li {% if cat == category %}class="active"{% endif %}><a href="{% url 'blog:category' cat.slug %}">{{ cat.title }}</a></li>
-            {% endfor %}
-          </ul>
-          <p class="navbar-text navbar-right">
-            <a class="navbar-link" href="{% url 'blog:taglist' %}"><i class="fa fa-tags fa-lg fa-fw" title="Tags"></i></a>
-            <a class="navbar-link" href="{% url 'blog:archives' %}"><i class="fa fa-calendar fa-lg fa-fw" title="Archivio Post"></i></a>
-            <a class="navbar-link" href="{% url 'blog:feeds' %}"><i class="fa fa-rss fa-lg fa-fw" title="Feeds"></i></a>
-	    {% if user.is_staff %}
-	      <a class="navbar-link" href="{% url 'admin:index' %}"><i class="fa fa-sliders fa-lg fa-fw" title="Admin"></i></a>
-            {% endif %}
-        </div>
-      </div>
-    </nav>
-
-    <div class="container">
-      {% block indextitle %}<div class="page-header"><h1>{% block title %} {{ SITENAME }} {% endblock %}</h1></div>{% endblock %}
-      <div class="row">
-        <div class="col-md-9" role="main">
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-3" role="complementary">
-          {% include "sidebar.html" %}
-        </div>
-      </div>
-      <footer>
-        <p>Powered by <a href="http://djangoproject.com/">Django</a>. Theme based on <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>.</p>
-        <p>&copy; Doc | 2007-{% now "Y" %} | <a href="https://github.com/ildoc/ildoc.it"><i class="fa fa-code" title="Source code on GitHub"></i></a> |
-          {% if not user.is_authenticated %}
-            <a href="{% url 'account_login' %}"><i class="fa fa-sign-in" title="Login"></i></a>
-          {% else %}
-            <a href="{% url 'account_logout' %}"><i class="fa fa-sign-out" title="Logout"></i></a>
-          {% endif %}</p>
-      </footer>
+  {% endblock %}
+  <title>{{ SITENAME }}{% block title %}{% endblock %}</title>
+</head>
+<body>
+  {% include "partial/gtm.html" %}
+  <aside>
+    <div>
+      <a href="{% url 'blog:index' %}">
+        <img src="{% static 'il_doc.jpg' %}" alt="{{ SITENAME }}" title="{{ SITENAME }}">
+      </a>
+      <h1><a href="{% url 'blog:index' %}">{{ SITENAME }}</a></h1>
+      <p>Genova, {{YEARS}} anni, lavoro nell'IT</p>
+      <nav>
+        <ul class="list">
+          {% for page in pages %}
+          <li><a href="{{ SITEURL }}/{{ page.url }}#{{ page.slug }}">{{ page.title }}</a></li>
+          {% endfor %}
+          {% for name, link in LINKS %}
+          <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <ul class="social">
+        {% for name, link in SOCIAL %}
+        <li><a class="sc-{{ name }}" href="{{ link }}" target="_blank"><i class="fa fa-{{ name }}"></i></a></li>
+        {% endfor %}
+      </ul>
     </div>
+  </aside>
+  <main>
+    {% if MAIN_MENU %}
+    <nav>
+      <a href="{{ SITEURL }}">Home</a>
+      {% for title, link in MENUITEMS %}
+      <a href="{{ link }}">{{ title }}</a>
+      {% endfor %}
+      {% if FEED_ALL_ATOM %}
+      <a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}">Atom</a>
+      {% endif %}
+      {% if FEED_ALL_RSS %}
+      <a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}">RSS</a>
+      {% endif %}
+    </nav>
+    {% endif %}
 
-    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'lib/bootstrap-3.3.4-dist/js/bootstrap.min.js' %}"></script>
-    {% include "blog/disqus.html" %}
-    {% include "analytics.html" %}
-    {% block additional_footer %}{% endblock %}
-  </body>
-  </html>
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+      {% if CC_LICENSE %}
+        {% include "partial/cc_license.html" %}
+      {% else %}
+      <p>&copy; {{ AUTHOR }} {{ COPYRIGHT_YEAR }}</p>
+      {% include "partial/flex.html" %}
+
+      {% endif %}
+    </footer>
+  </main>
+  {% include "analytics.html" %}
+  {% if ADD_THIS_ID %}
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid={{ ADD_THIS_ID }}" async="async"></script>
+  {% endif %}
+  {% block additional_js %}{% endblock %}
+</body>
+</html>

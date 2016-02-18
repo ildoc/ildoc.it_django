@@ -5,17 +5,18 @@ from pagedown.widgets import AdminPagedownWidget
 
 from .models import Post, Category, Tag
 
+
 class PostAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.TextField: {'widget': AdminPagedownWidget },
+        models.TextField: {'widget': AdminPagedownWidget},
     }
 
     fieldsets = [
-        ('Post', {'fields':['title', 'content', 'category', 'tags', 'status']})
+        ('Post', {'fields': ['title', 'content', 'category', 'tags', 'status']})
     ]
 
-    list_display = ('title', 'pub_date', 'modified_date', 'status')
-    list_filter = ['pub_date', 'modified_date', 'status']
+    list_display = ('title', 'pub_date', 'modified', 'status')
+    list_filter = ['pub_date', 'modified', 'status']
     search_fields = ['title', 'content']
     ordering = ['-pub_date']
 
@@ -23,12 +24,14 @@ class PostAdmin(admin.ModelAdmin):
         obj.author = request.user
         obj.save()
 
+
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Category', {'fields': ['title']})
     ]
     list_display = ('title', 'slug')
     search_fields = ['title']
+
 
 class TagAdmin(admin.ModelAdmin):
     fieldsets = [
