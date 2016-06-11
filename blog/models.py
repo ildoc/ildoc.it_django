@@ -4,6 +4,7 @@ from datetime import datetime
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.utils.html import strip_tags
 
 from core.models import BaseModel
@@ -55,9 +56,9 @@ class Post(BaseModel):
     content = models.TextField('Contenuto')
     content_html = models.TextField(editable=False, blank=True, null=True)
     slug = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('Pubblicato il', default=datetime.now())
-    creation_date = models.DateTimeField('Creato il', default=datetime.now())
-    modified_date = models.DateTimeField('Modificato il', default=datetime.now())
+    pub_date = models.DateTimeField('Pubblicato il', default=timezone.now)
+    creation_date = models.DateTimeField('Creato il', default=timezone.now)
+    modified_date = models.DateTimeField('Modificato il', default=timezone.now)
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User)
