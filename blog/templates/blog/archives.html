@@ -1,18 +1,25 @@
 {% extends "base.html" %}
-{% block title %} &ndash; Archives{% endblock %}
+{% block windowtitle %}Archivio post - {{ block.super }}{% endblock %}
+{% block title %}{{ SITENAME }} <small>Archivio post</small>{% endblock %}
+{% block meta_keywords %}archivio post{% endblock %}
+{% block meta_description %}Archivio post{% endblock %}
 
 {% block content %}
-<article>
-  <header>
-    <h1>Archives</h1>
-  </header>
-  <div>
-    <dl>
-      {% for article in dates %}
-      <dt>{{ article.locale_date }}</dt>
-      <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
-      {% endfor %}
-    </dl>
-  </div>
-</article>
+{% regroup post_list by pub_date|date:"Y" as post_by_year %}
+
+{% for postlistY in post_by_year %}
+  <h2>{{ postlistY.grouper }}</h2>
+
+  {% regroup postlistY.list by pub_date|date:"M" as post_by_month %}
+  {% for postlistM in post_by_month %}
+    <h3>{{ postlistM.grouper }}</h3>
+      <ul>
+        {% for post in postlistM.list %}
+          <li>{{ post.pub_date|date:"d" }} - <a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+    <hr />
+{% endfor %}
 {% endblock %}

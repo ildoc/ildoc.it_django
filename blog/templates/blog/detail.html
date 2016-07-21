@@ -1,37 +1,19 @@
 {% extends "base.html" %}
-
-{% block meta %}
-<meta name="author" content="{{ post.author.name }}" />
-<meta name="description" content="{{ post.except|striptags }}" />
-<meta name="keywords" content="{{ post.tags.all|join:', ' }}">
-{% endblock %}
-
-{% block title %} &ndash; {{ post.title }}{% endblock %}
-
+{% block windowtitle %}{{ post.title }} - {{ block.super }}{% endblock %}
+{% block indextitle %}<div class="page-header"><h1>{{ post.title }}</h1></div>{% endblock %}
+{% block meta_keywords %}{% for tag in post.tags.all %}{{ tag.title }}, {% endfor %}{% endblock %}
+{% block meta_description %}{{ post.excerpt|striptags }}{% endblock %}
 {% block content %}
-<article>
-  <header>
-    <h1 id="{{ article.slug }}">{{ post.title }}</h1>
-    <p>Posted on {{ post.pub_date|date:"j M Y H:i" }} in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category.title }}</a></p>
-  </header>
+  <div class="well small">
+    {{ post.pub_date|date:"j M Y H:i" }}
+    by {{ post.author }}
+    in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category.title }}</a>
+    | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag.title }}</a> {% endfor %}
+  </div>
+  <div>{{ post.content_html|safe }}</div>
   <div>
-    {{ post.content_html|safe }}
+    <h2>Commenti</h2>
+    <div id="disqus_thread"></div>
   </div>
-  <div class="tag-cloud">
-    <p>
-        {% if post.tags %}
-            &#8226; Tagged with
-            {% for tag in post.tags.all %}
-                <a href="{% url 'blog:tag' tag.slug %}">{{ tag.title }}</a>
-                {% if not loop.last %},{% endif %}
-            {% endfor %}
-        {% endif %}
-    </p>
-  </div>
-  {% include "blog/disqus.html" %}
-</article>
-{% endblock %}
 
-{% block additional_js %}
-  {% include "partial/jsonld_article.html" %}
 {% endblock %}
