@@ -168,9 +168,3 @@ SITE_TITLE = "il_doc's"
 ANALYTICS_ID = 'UA-7958919-14'
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
-
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass
