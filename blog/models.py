@@ -80,7 +80,7 @@ class Post(BaseModel):
     def save(self, *args, **kwargs):
         self.content_html = markdown(self.content, ['codehilite'])
 
-        if self.status == PUBLISHED:
+        if self.status == self.PUBLISHED:
             self.pub_date = datetime.now()
 
         if not self.id:
