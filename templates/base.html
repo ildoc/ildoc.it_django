@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"> {% load static from staticfiles %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static from staticfiles %}
 
     <link href="{% static 'lib/bootstrap-3.3.6-dist/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/local.css' %}" rel="stylesheet">
@@ -12,7 +14,9 @@
 
     <link href="{% static 'favicon.ico' %}" rel='shortcut icon' type='image/x-icon' />
 
-    <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'> {% block additional_head %}{% endblock %}
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+
+    {% block additional_head %}{% endblock %}
 
     <title>{% block windowtitle %}{{ SITENAME }}{% endblock %}</title>
     <meta name="keywords" content="ildoc, {% block meta_keywords %}{% endblock %}" />
@@ -51,9 +55,7 @@
     </nav>
 
     <div class="container">
-        {% block indextitle %}
-        <div class="page-header">
-            <h1>{% block title %} {{ SITENAME }} {% endblock %}</h1></div>{% endblock %}
+        {% block indextitle %}<div class="page-header"><h1>{% block title %} {{ SITENAME }} {% endblock %}</h1></div>{% endblock %}
         <div class="row">
             <div class="col-md-9" role="main">
                 {% block content %}{% endblock %}
@@ -64,15 +66,21 @@
         </div>
         <footer>
             <p>Powered by <a href="http://djangoproject.com/">Django</a>. Theme based on <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>.</p>
-            <p>&copy; Doc | 2007-{% now "Y" %} | <a href="https://github.com/ildoc/ildoc.it"><i class="fa fa-code" title="Source code on GitHub"></i></a> | {% if not user.is_authenticated %}
-                <a href="{% url 'account_login' %}"><i class="fa fa-sign-in" title="Login"></i></a> {% else %}
-                <a href="{% url 'account_logout' %}"><i class="fa fa-sign-out" title="Logout"></i></a> {% endif %}</p>
+            <p>&copy; Doc | 2007-{% now "Y" %} | <a href="https://github.com/ildoc/ildoc.it"><i class="fa fa-code" title="Source code on GitHub"></i></a> |
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'account_login' %}"><i class="fa fa-sign-in" title="Login"></i></a>
+                {% else %}
+                    <a href="{% url 'account_logout' %}"><i class="fa fa-sign-out" title="Logout"></i></a>
+                {% endif %}
+            </p>
         </footer>
     </div>
 
     <script src="{% static 'lib/jquery/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'lib/bootstrap-3.3.6-dist/js/bootstrap.min.js' %}"></script>
-    {% include "blog/disqus.html" %} {% include "analytics.html" %} {% block additional_footer %}{% endblock %}
+    {% include "blog/disqus.html" %}
+    {% include "analytics.html" %}
+    {% block additional_footer %}{% endblock %}
 </body>
 
 </html>
