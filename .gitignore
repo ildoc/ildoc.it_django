@@ -10,3 +10,5 @@ collected_static/
 settings/local_settings.py
 
 log/
+
+.reload
