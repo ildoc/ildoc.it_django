@@ -6,6 +6,7 @@
 
 {% block content %}
 {% if RANDOMQUOTE %}
+<div class="quote">
   <blockquote id="quote" class ="well small">
     {{ RANDOMQUOTE.text }}
     <footer class="quote-details">
@@ -13,6 +14,8 @@
       {% if RANDOMQUOTE.url != '' %} - <a href="{{ RANDOMQUOTE.url }}">Link</a>{% endif %}
     </footer>
   </blockquote>
+  <a href="{% url 'quotes:all_quotes' %}" style="float: right; margin: -15px 0 0 0"><i class="fa fa-ellipsis-h" title="Tutte le citazioni"></i></a>
+</div>
 {% endif %}
 {% if latest_post_list %}
   {% for post in latest_post_list %}
