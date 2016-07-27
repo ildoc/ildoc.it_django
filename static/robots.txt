@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /admin/
+Disallow: /admin
 
-Sitemap: http://ildoc.it/sitemap.xml
+Sitemap: https://ildoc.it/sitemap.xml
