@@ -1,20 +1,11 @@
 from django.conf.urls import url
 from django.contrib.sitemaps.views import sitemap
 
-from .sitemap import BlogSitemap
 from .feeds import LatestEntriesFeed
 from . import views
 
-sitemaps = {
-    "blog": BlogSitemap,
-    # "view": ViewSitemap,
-}
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-
-    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-
     url(r'^add/$', views.add_post, name='add_post'),
 
     url(r'^feeds/$', LatestEntriesFeed(), name='feeds'),

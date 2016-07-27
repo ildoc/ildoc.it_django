@@ -31,6 +31,7 @@ PREREQ_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.sites',
+    'django.contrib.redirects',
 ]
 
 THIRDPART_APPS = [
@@ -43,6 +44,7 @@ THIRDPART_APPS = [
 ]
 
 PROJECT_APPS = [
+    'homepage.apps.HomepageConfig',
     'blog.apps.BlogConfig',
     'quotes.apps.QuotesConfig',
     # 'snippets',
@@ -59,6 +61,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'ildoc.urls'

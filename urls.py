@@ -4,16 +4,15 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
-    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^quotes/', include('quotes.urls', namespace='quotes')),
 
-    #url(r'^snippets/', include('snippets.urls')),
+    # url(r'^snippets/', include('snippets.urls')),
 
-    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    url(r'^', include('blog.urls', namespace='blog')),
+    url(r'^blog/', include('blog.urls', namespace='blog')),
 
+    url(r'^', include('homepage.urls', namespace='homepage')),
 ]

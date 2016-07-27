@@ -1,7 +1,8 @@
 from django.contrib.sitemaps import Sitemap
 from django.core.urlresolvers import reverse
 
-from .models import Post
+from blog.models import Post
+
 
 class BlogSitemap(Sitemap):
     priority = 0.5
