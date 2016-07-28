@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from django.contrib.auth.decorators import permission_required
 from django.http import Http404
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.template.defaultfilters import slugify
 
 from .models import Post, Category, Tag
@@ -12,6 +12,10 @@ from .forms import PostForm
 
 def detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
+
+    if post.status==Post.DRAFT and not request.user.is_superuser:
+        raise PermissionDenied
+
     return render(
         request,
         'blog/detail.html',

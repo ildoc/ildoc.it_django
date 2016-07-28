@@ -77,6 +77,9 @@ class Post(BaseModel):
     def get_absolute_url(self):
         return '/' + self.slug
 
+    def is_draft(self):
+        return self.status == self.DRAFT
+
     def save(self, *args, **kwargs):
         self.content_html = markdown(self.content, ['codehilite'])
 
