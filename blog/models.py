@@ -12,18 +12,6 @@ from core.models import BaseModel
 from markdown import markdown
 
 
-class Category(BaseModel):
-    title = models.CharField('Categoria', max_length=200)
-    slug = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(Category, self).save(*args, **kwargs)
-
-
 class Tag(BaseModel):
     title = models.CharField('Tag', max_length=200)
     slug = models.CharField(max_length=200)
@@ -56,9 +44,6 @@ class Post(BaseModel):
     content_html = models.TextField(editable=False, blank=True, null=True)
     slug = models.CharField(max_length=200)
     pub_date = models.DateTimeField('Pubblicato il', default=timezone.now)
-    creation_date = models.DateTimeField('Creato il', default=timezone.now)
-    modified_date = models.DateTimeField('Modificato il', default=timezone.now)
-    category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User)
     status = models.IntegerField(choices=STATUS_CHOICES, default=PUBLISHED)

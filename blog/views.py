@@ -6,8 +6,32 @@ from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.template.defaultfilters import slugify
 
-from .models import Post, Category, Tag
+from .models import Post, Tag
 from .forms import PostForm
+
+
+def index(request):
+    post_list = Post.objects.filter(status=Post.PUBLISHED).prefetch_related('tags').order_by('-pub_date')
+    paginator = Paginator(post_list, 10)
+
+    page = request.GET.get('page')
+    try:
+        latest_post_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        latest_post_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        latest_post_list = paginator.page(paginator.num_pages)
+
+    return render(
+        None,
+        'blog/post_list.html',
+        {
+            'latest_post_list': latest_post_list,
+            'nbar': 'blog',
+        },
+        context_instance=RequestContext(request))
 
 
 def detail(request, slug):
@@ -21,36 +45,7 @@ def detail(request, slug):
         'blog/detail.html',
         {
             'post': post,
-            'category': post.category,
-        },
-        context_instance=RequestContext(request)
-    )
-
-
-def category(request, slug):
-    try:
-        category = Category.objects.get(slug=slug)
-    except ObjectDoesNotExist:
-        raise Http404
-
-    post_list = Post.objects.filter(category=category, status=Post.PUBLISHED).select_related().order_by('-pub_date')
-    paginator = Paginator(post_list, 10)
-
-    page = request.GET.get('page')
-    try:
-        latest_post_list = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        latest_post_list = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        latest_post_list = paginator.page(paginator.num_pages)
-
-    return render_to_response(
-        'blog/category.html',
-        {
-            'latest_post_list': latest_post_list,
-            'category': category,
+            'nbar': 'blog',
         },
         context_instance=RequestContext(request)
     )
@@ -80,6 +75,7 @@ def tag(request, slug):
         {
             'latest_post_list': latest_post_list,
             'tag': tag,
+            'nbar': 'blog',
         },
         context_instance=RequestContext(request)
     )
@@ -89,32 +85,12 @@ def taglist(request):
     tags = Tag.objects.filter(pk__in=Post.objects.filter(status=Post.PUBLISHED).values('tags')).order_by('title')
     return render_to_response(
         'blog/tags.html',
-        {'tags': tags, },
+        {
+            'tags': tags,
+            'nbar': 'blog',
+        },
         context_instance=RequestContext(request)
     )
-
-'''
-def author(request, slug)
-    author = User.objects.get(slug=slug)
-    post_list = Post.objects.filter(tags=tag).select_related().order_by('-pub_date')
-    paginator = Paginator(post_list, 10)
-
-    page = request.GET.get('page')
-    try:
-        latest_post_list = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        latest_post_list = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        latest_post_list = paginator.page(paginator.num_pages)
-
-    return render_to_response('tag.html', {
-        'latest_post_list': latest_post_list,
-        'tag': tag,
-        },
-        context_instance=RequestContext(request))
-'''
 
 
 def archives(request):
@@ -124,6 +100,7 @@ def archives(request):
         'blog/archives.html',
         {
             'post_list': post_list,
+            'nbar': 'blog',
         },
         context_instance=RequestContext(request)
     )
@@ -155,6 +132,9 @@ def add_post(request):
         form = PostForm()
     return render_to_response(
         'blog/post_add.html',
-        {'form': form},
+        {
+            'form': form,
+            'nbar': 'blog',
+        },
         context_instance=RequestContext(request)
     )

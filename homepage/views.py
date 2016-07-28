@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 
-from blog.models import Post, Category, Tag
+from blog.models import Post, Tag
 
 
 def index(request):
-    post_list = Post.objects.filter(status=Post.PUBLISHED).prefetch_related('category').prefetch_related('tags').order_by('-pub_date')
+    post_list = Post.objects.filter(status=Post.PUBLISHED).prefetch_related('tags').order_by('-pub_date')
     paginator = Paginator(post_list, 10)
 
     page = request.GET.get('page')

@@ -3,7 +3,7 @@ from django.db import models
 
 from pagedown.widgets import AdminPagedownWidget
 
-from .models import Post, Category, Tag
+from .models import Post, Tag
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ class PostAdmin(admin.ModelAdmin):
     }
 
     fieldsets = [
-        ('Post', {'fields': ['title', 'content', 'category', 'tags', 'status']})
+        ('Post', {'fields': ['title', 'content', 'tags', 'status']})
     ]
 
     list_display = ('title', 'pub_date', 'modified', 'status')
@@ -25,14 +25,6 @@ class PostAdmin(admin.ModelAdmin):
         obj.save()
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Category', {'fields': ['title']})
-    ]
-    list_display = ('title', 'slug')
-    search_fields = ['title']
-
-
 class TagAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Tag', {'fields': ['title']})
@@ -41,5 +33,4 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 admin.site.register(Post, PostAdmin)
-admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)

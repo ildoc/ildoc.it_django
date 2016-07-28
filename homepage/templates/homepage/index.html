@@ -23,8 +23,7 @@
     <h2><a href="{% url 'blog:detail' post.slug %}" class="post-title">{{ post.title }}</a></h2>
     <div class="well small">
       {{ post.pub_date|date:"d/M/Y H:i" }}
-      by {{ post.author }}
-      in <a href="{% url 'blog:category' post.category.slug %}">{{ post.category.title }}</a>
+      by <span rel="author">{{ post.author }}</span>
       | Tags: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}">{{ tag.title }}</a> {% endfor %}
       <span class="disqus-comment-count" data-disqus-identifier="{{ post.slug }}"></span>
     </div>

@@ -6,6 +6,8 @@ from . import views
 
 
 urlpatterns = [
+    url(r'^$', views.index, name='index'),
+
     url(r'^add/$', views.add_post, name='add_post'),
 
     url(r'^feeds/$', LatestEntriesFeed(), name='feeds'),
@@ -13,9 +15,8 @@ urlpatterns = [
     url(r'^archives/$', views.archives, name='archives'),
 
     url(r'^tag/(?P<slug>[\w-]+)/$', views.tag, name='tag'),
-    url(r'^tags/$', views.taglist, name='taglist'),
 
-    url(r'^category/(?P<slug>[\w-]+)/$', views.category, name='category'),
+    url(r'^tags/$', views.taglist, name='taglist'),
 
     url(r'^(?P<slug>[\w-]+)/$', views.detail, name='detail'),
 ]

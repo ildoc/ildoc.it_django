@@ -79,7 +79,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'core.context_processors.core_values',
-                'blog.context_processors.blog_common',
                 'quotes.context_processors.quotes_common',
             ],
         },
