@@ -5,6 +5,11 @@
     <h1>
         {{ post.title }}
         {% if post.is_draft %}<small>[Draft]</small>{% endif %}
+        {% if user.is_superuser %}
+        <a href="{% url 'admin:blog_post_change' post.id %}" style="float:right">
+            <i class="fa fa-pencil-square-o fa-1"></i>
+        </a>
+        {% endif %}
     </h1>
 </div>
 {% endblock %}

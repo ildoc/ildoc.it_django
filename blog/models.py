@@ -20,8 +20,7 @@ class Category(BaseModel):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.title)
+        self.slug = slugify(self.title)
         super(Category, self).save(*args, **kwargs)
 
 
