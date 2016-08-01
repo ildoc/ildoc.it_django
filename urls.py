@@ -6,6 +6,10 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),    
+
+    url(r'^apiv1/', include('apiv1.urls', namespace='apiv1')),
+
     url(r'^quotes/', include('quotes.urls', namespace='quotes')),
 
     # url(r'^snippets/', include('snippets.urls')),

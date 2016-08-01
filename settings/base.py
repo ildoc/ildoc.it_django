@@ -40,13 +40,14 @@ THIRDPART_APPS = [
     'allauth.socialaccount',
     'django_extensions',
     'pagedown',
-    # 'rest_framework',
+    'rest_framework',
 ]
 
 PROJECT_APPS = [
     'homepage.apps.HomepageConfig',
     'blog.apps.BlogConfig',
     'quotes.apps.QuotesConfig',
+    'apiv1.apps.Apiv1Config',
     # 'snippets',
 ]
 
@@ -123,6 +124,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }
 
 # Internationalization

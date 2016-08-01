@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.html import strip_tags
+from django.core.urlresolvers import reverse
 
 from core.models import BaseModel
 
@@ -59,7 +60,7 @@ class Post(BaseModel):
         return self.title
 
     def get_absolute_url(self):
-        return '/' + self.slug
+        return reverse('blog:detail', args=(self.slug,))
 
     def is_draft(self):
         return self.status == self.DRAFT
