@@ -9,6 +9,11 @@ collected_static/
 
 settings/local_settings.py
 
+*/app/*.js
+*/app/*.map
+*/node_modules
+*/typings
+
 log/
 
 .reload
