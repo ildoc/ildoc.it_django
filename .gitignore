@@ -9,10 +9,10 @@ collected_static/
 
 settings/local_settings.py
 
-*/app/*.js
-*/app/*.map
-*/node_modules
-*/typings
+client/**/*.js
+client/**/*.map
+client/node_modules
+client/typings
 
 log/
 
